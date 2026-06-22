@@ -4,7 +4,7 @@ import { AuthRequest } from '../middlewares/authMiddleware';
 
 export const getTasks = async (req: AuthRequest, res: Response) => {
   const userId = req.user.userId;
-  const projectId = req.query;
+  const projectId = req.params.projectId|| req.query.projectId;
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;
   const sortBy = (req.query.sortBy as string) || 'createdAt';

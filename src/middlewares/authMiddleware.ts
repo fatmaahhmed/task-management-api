@@ -11,7 +11,7 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
     try {
       token = req.headers.authorization.split(' ')[1];
       const decoded = verify(token, process.env.JWT_SECRET as string);
-      console.log('this is decoded', decoded);
+      // console.log('this is decoded', decoded);
       req.user = decoded;
       return next();
     } catch (error) {

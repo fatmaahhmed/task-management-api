@@ -47,7 +47,7 @@
                 "exec": [
                   "var jsonData = pm.response.json();",
                   "if (jsonData.token) {",
-                  "    pm.environment.set(\"token\", jsonData.token);",
+                  "    pm.collectionVariables.set(\"token\", jsonData.token);",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -94,7 +94,7 @@
                 "exec": [
                   "var jsonData = pm.response.json();",
                   "if (jsonData._id) {",
-                  "    pm.environment.set(\"projectId\", jsonData._id);",
+                  "    pm.collectionVariables.set(\"projectId\", jsonData._id);",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -314,7 +314,7 @@
                 "exec": [
                   "var jsonData = pm.response.json();",
                   "if (jsonData._id) {",
-                  "    pm.environment.set(\"taskId\", jsonData._id);",
+                  "    pm.collectionVariables.set(\"taskId\", jsonData._id);",
                   "}"
                 ],
                 "type": "text/javascript"

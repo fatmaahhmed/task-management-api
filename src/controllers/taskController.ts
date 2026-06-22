@@ -4,7 +4,7 @@ import { AuthRequest } from '../middlewares/authMiddleware';
 
 export const getTasks = async (req: AuthRequest, res: Response) => {
   const userId = req.user.userId;
-  const { projectId } = req.params;
+  const projectId = req.query;
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;
   const sortBy = (req.query.sortBy as string) || 'createdAt';
@@ -19,6 +19,7 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
     const tasks = await taskService.getTasks(String(projectId), userId, filters, page, limit, sortBy, order);
     res.status(200).json(tasks);
   } catch (error: any) {
+    console.log("in getTasks error", error)
     res.status(404).json({ error: error.message });
   }
 };

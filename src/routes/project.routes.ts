@@ -7,12 +7,8 @@ import taskRoutes from './task.routes';
 
 const router = Router();
 
-// Nested routes for tasks under projects
 router.use('/:projectId/tasks', taskRoutes);
-
-// Apply auth to all project routes
 router.use(protect);
-
 router.post('/', validate(projectSchema), projectController.createProject);
 router.get('/', validate(querySchema), projectController.getProjects);
 router.get('/:id', projectController.getProjectById);

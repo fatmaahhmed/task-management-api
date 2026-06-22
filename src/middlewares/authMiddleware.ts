@@ -3,7 +3,7 @@ import { verify } from 'jsonwebtoken';
 
 export interface AuthRequest extends Request {
   user?: any;
-}
+  }
 
 export const protect = (req: AuthRequest, res: Response, next: NextFunction): void => {
   let token;
@@ -11,6 +11,7 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
     try {
       token = req.headers.authorization.split(' ')[1];
       const decoded = verify(token, process.env.JWT_SECRET as string);
+      console.log('this is decoded', decoded);
       req.user = decoded;
       return next();
     } catch (error) {

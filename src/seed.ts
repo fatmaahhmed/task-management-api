@@ -1,16 +1,18 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import User from './src/models/User';
-import Project from './src/models/Project';
-import Task from './src/models/Task';
+import User from './models/User';
+import Project from './models/Project';
+import Task from './models/Task';
 
 dotenv.config();
 
-const seedDatabase = async () => {
+const seedDatabase = async (runStandalone: boolean = true) => {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/project_management');
-    console.log('MongoDB Connected for Seeding...');
+    if (runStandalone && mongoose.connection.readyState !== 1) {
+      await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/project_management');
+      console.log('MongoDB Connected for Seeding...');
+    }
 
     // Clear existing data
     await User.deleteMany();
@@ -88,17 +90,24 @@ const seedDatabase = async () => {
     ]);
 
     console.log('Database Seeded Successfully! 🌱');
-    console.log('--- Test Accounts ---');
-    console.log('Admin: admin@example.com / admin123');
-    console.log('Member: alice@example.com / password123');
-    console.log('Member: bob@example.com / password123');
-    process.exit();
+    if (runStandalone) {
+      console.log('--- Test Accounts ---');
+      console.log('Admin: admin@example.com / admin123');
+      console.log('Member: alice@example.com / password123');
+      console.log('Member: bob@example.com / password123');
+      process.exit();
+    }
   } catch (error) {
     console.error('Error Seeding Database:', error);
-    process.exit(1);
+    if (runStandalone) {
+      process.exit(1);
+    }
   }
 };
 
-seedDatabase();
-// export this function to use it in server.ts
+// Check if running directly
+if (require.main === module) {
+  seedDatabase(true);
+}
+
 export default seedDatabase; 

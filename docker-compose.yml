@@ -6,7 +6,7 @@ services:
       - "4000:4000"
     environment:
       - PORT=4000
-      - MONGO_URI=mongodb://mongo:27017/project_management
+      - MONGODB_URI=mongodb://mongo:27017/project_management
       - JWT_SECRET=super_secret_docker_key
     depends_on:
       - mongo

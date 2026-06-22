@@ -10,7 +10,7 @@ dotenv.config();
 const seedDatabase = async (runStandalone: boolean = true) => {
   try {
     if (runStandalone && mongoose.connection.readyState !== 1) {
-      await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/project_management');
+      await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/project_management');
       console.log('MongoDB Connected for Seeding...');
     }
 

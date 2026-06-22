@@ -9,12 +9,9 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
-    
-    token = req.headers.authorization.split(' ')[1];
-    const decoded = verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded;
-      
-    
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = verify(token, process.env.JWT_SECRET as string);
+      req.user = decoded;
       return next();
     } catch (error) {
       res.status(401).json({ error: 'Not authorized, token failed' });
@@ -25,4 +22,14 @@ export const protect = (req: AuthRequest, res: Response, next: NextFunction): vo
     res.status(401).json({ error: 'Not authorized, no token provided' });
     return;
   }
+};
+
+export const authorizeRoles = (...roles: string[]) => {
+  return (req: AuthRequest, res: Response, next: NextFunction): void => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403).json({ error: 'User role not authorized to access this route' });
+      return;
+    }
+    next();
+  };
 };

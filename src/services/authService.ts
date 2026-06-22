@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User, { IUser } from '../models/User';
-const jwt = require('jsonwebtoken'); // الحل السحري هنا
+import jwt from 'jsonwebtoken';
 
 export const registerUser = async (data: any): Promise<IUser> => {
   const existingUser = await User.findOne({ email: data.email });
@@ -32,7 +32,7 @@ export const loginUser = async (data: any): Promise<{ user: IUser; token: string
   }
   const token = jwt.sign(
     { userId: user._id.toString() }, 
-    process.env.JWT_SECRET, 
+    process.env.JWT_SECRET as string, 
     { expiresIn: '1d' }
   );
 

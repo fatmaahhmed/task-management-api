@@ -1,7 +1,14 @@
-// src/models/User.ts
-import { Schema, model } from 'mongoose';
+  // src/models/User.ts
+import { Schema, model, Document } from 'mongoose';
 
-const userSchema = new Schema({
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: 'Admin' | 'Member';
+}
+
+const userSchema = new Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },

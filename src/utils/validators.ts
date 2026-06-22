@@ -15,7 +15,6 @@ export const loginSchema = z.object({
   }),
 });
 
-
 export const projectSchema = z.object({
   body: z.object({
     title: z.string().min(3, 'Title must be at least 3 characters'),
@@ -30,6 +29,18 @@ export const taskSchema = z.object({
     description: z.string().optional(),
     status: z.enum(['To Do', 'In Progress', 'Done']).optional(),
     priority: z.enum(['Low', 'Medium', 'High']).optional(),
-    dueDate: z.string().optional(), // بنستقبل التاريخ كنص وبعدين الـ DB بتحوله
+    dueDate: z.string().optional(), // We receive as string, DB handles date
+    projectId: z.string().optional() // Can be passed in body or params depending on route
   }),
+});
+
+export const querySchema = z.object({
+  query: z.object({
+    page: z.string().optional().transform(Number).refine(n => !isNaN(n) && n > 0, { message: "Page must be a positive number" }).optional(),
+    limit: z.string().optional().transform(Number).refine(n => !isNaN(n) && n > 0, { message: "Limit must be a positive number" }).optional(),
+    sortBy: z.string().optional(),
+    order: z.enum(['asc', 'desc']).optional(),
+    status: z.string().optional(),
+    priority: z.string().optional(),
+  })
 });

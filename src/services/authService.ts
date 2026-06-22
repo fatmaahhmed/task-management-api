@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User, { IUser } from '../models/User';
-import jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 
 export const registerUser = async (data: any): Promise<IUser> => {
   const existingUser = await User.findOne({ email: data.email });
@@ -30,7 +30,7 @@ export const loginUser = async (data: any): Promise<{ user: IUser; token: string
   if (!isMatch) {
     throw new Error('Invalid email or password');
   }
-  const token = jwt.sign(
+  const token = sign(
     { userId: user._id.toString() }, 
     process.env.JWT_SECRET as string, 
     { expiresIn: '1d' }

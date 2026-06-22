@@ -3,7 +3,7 @@ import * as taskService from '../services/taskService';
 import { AuthRequest } from '../middlewares/authMiddleware';
 
 export const getTasks = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { projectId } = req.params;
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;
@@ -24,7 +24,7 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
 };
 
 export const getTaskById = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { id } = req.params;
 
   try {
@@ -36,7 +36,7 @@ export const getTaskById = async (req: AuthRequest, res: Response) => {
 };
 
 export const createTask = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const projectId = req.params.projectId || req.body.projectId;
   
   if (!projectId) {
@@ -53,7 +53,7 @@ export const createTask = async (req: AuthRequest, res: Response) => {
 };
 
 export const updateTask = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { id } = req.params;
 
   try {
@@ -65,7 +65,7 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
 };
 
 export const deleteTask = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { id } = req.params;
 
   try {

@@ -3,7 +3,7 @@ import * as projectService from '../services/projectService';
 import { AuthRequest } from '../middlewares/authMiddleware';
 
 export const getProjects = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;
   const sortBy = (req.query.sortBy as string) || 'createdAt';
@@ -14,7 +14,7 @@ export const getProjects = async (req: AuthRequest, res: Response) => {
 };
 
 export const getProjectById = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { id } = req.params;
 
   try {
@@ -26,14 +26,14 @@ export const getProjectById = async (req: AuthRequest, res: Response) => {
 };
 
 export const createProject = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   
   const project = await projectService.createProject(req.body, userId);
   res.status(201).json(project);
 };
 
 export const updateProject = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { id } = req.params;
 
   try {
@@ -45,7 +45,7 @@ export const updateProject = async (req: AuthRequest, res: Response) => {
 };
 
 export const deleteProject = async (req: AuthRequest, res: Response) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { id } = req.params;
 
   try {
